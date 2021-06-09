@@ -27,7 +27,7 @@ const MusicSearch = () =>{
 
    try{
      const res = await axios.request(options)
-
+      console.log(res.data.data)
      setMusic(res.data.data)
      setLoading(false)
      //console.log(res.data.data)
@@ -53,8 +53,8 @@ const MusicSearch = () =>{
           </audio>
       </div>
       <div className="displayResults">
-        {error ? <h3>{error}</h3>:''}
-        {loading ? <h3>Loading...</h3>:music.map((item) => (
+        {error ?  <h3>{error}</h3>:''}
+        {loading ? <h3>Loading...</h3>: (music.length ? music.map((item) => (
           <div onClick = {
             () => setAudio(item.preview)
           }
@@ -63,7 +63,7 @@ const MusicSearch = () =>{
           } >
             <Result item = {item} />
           </div>
-        ))}
+        )):<h4>No results found</h4>)}
       </div>
     </div>
   )
