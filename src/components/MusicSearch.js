@@ -2,7 +2,9 @@ import axios from 'axios'
 import React, {useState} from 'react'
 import {Result} from './Result'
 const MusicSearch = () =>{
+
   const [query, setQuery] = useState('');
+  const [loading, setLoading] = useState(false)
   const [music, setMusic] = useState([])
      const [audio, setAudio] = useState('')
 
@@ -10,7 +12,7 @@ const MusicSearch = () =>{
 
   const getMusic = async (evt)=> {
     evt.preventDefault()
-     
+     setLoading(true)
    const options = {
      method: 'GET',
      url: 'https://deezerdevs-deezer.p.rapidapi.com/search',
@@ -27,6 +29,7 @@ const MusicSearch = () =>{
      const res = await axios.request(options)
 
      setMusic(res.data.data)
+     setLoading(false)
      //console.log(res.data.data)
    }catch(err){
      setError(err.message)
@@ -50,7 +53,8 @@ const MusicSearch = () =>{
           </audio>
       </div>
       <div className="displayResults">
-        {error ? <h3>{error}</h3>:music.map((item) => (
+        {error ? <h3>{error}</h3>:''}
+        {loading ? <h3>Loading...</h3>:music.map((item) => (
           <div onClick = {
             () => setAudio(item.preview)
           }
