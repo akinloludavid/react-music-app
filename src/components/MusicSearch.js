@@ -1,5 +1,5 @@
 import axios from 'axios'
-import React, {useState} from 'react'
+import React, {useState, useEffect} from 'react'
 import {Result} from './Result'
 const MusicSearch = () =>{
 
@@ -27,17 +27,14 @@ const MusicSearch = () =>{
 
    try{
      const res = await axios.request(options)
-      console.log(res.data.data)
      setMusic(res.data.data)
      setLoading(false)
      //console.log(res.data.data)
-   }catch(err){
-     setError(err.message)
-   }
+  }catch(err){
+    setError(err.message)
+  }
 
   }
- 
-
 
   return (
     <div>
@@ -54,7 +51,7 @@ const MusicSearch = () =>{
       </div>
       <div className="displayResults">
         {error ?  <h3>{error}</h3>:''}
-        {loading ? <h3>Loading...</h3>: (music.length ? music.map((item) => (
+        {loading ? <h3>Loading...</h3>: (music ? music.map((item) => (
           <div onClick = {
             () => setAudio(item.preview)
           }
